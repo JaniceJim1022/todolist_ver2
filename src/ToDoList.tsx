@@ -57,30 +57,28 @@ export default function ToDoList() {
       </button>
       {
         // to do items
-        todos
-          // .filter((todo) => todo.completed === false)
-          .map((todo, index) => (
-            <ToDoItem
-              task2={todo}
-              onToggleComplete={() => {
-                const newTodos = todos.slice();
-                newTodos[index] = {
-                  ...newTodos[index],
-                  completed: !newTodos[index].completed,
-                };
+        todos.map((todo, index) => (
+          <ToDoItem
+            task2={todo}
+            onToggleComplete={() => {
+              const newTodos = todos.slice();
+              newTodos[index] = {
+                ...newTodos[index],
+                completed: !newTodos[index].completed,
+              };
 
-                setTodos(newTodos.filter((todo) => todo.completed === false));
+              setTodos(newTodos.filter((todo) => todo.completed === false));
 
-                const newDone = [
-                  ...done,
-                  newTodos.filter((todo) => todo.completed === true)[0],
-                ];
+              const newDone = [
+                ...done,
+                newTodos.filter((todo) => todo.completed === true)[0],
+              ];
 
-                setDone(newDone);
-              }}
-              key={todo.id}
-            />
-          ))
+              setDone(newDone);
+            }}
+            key={todo.id}
+          />
+        ))
       }
 
       <h2>Completed Task:</h2>
