@@ -23,7 +23,7 @@ import ToDoItem from "./ToDoItem";
 export default function ToDoList() {
   const [todos, setTodos] = useState<Item[]>([]);
   const [input, setInput] = useState("");
-  const [done, setDone] = useState<Item[]>([]);
+  //   const [done, setDone] = useState<Item[]>([]);
 
   return (
     <>
@@ -33,6 +33,7 @@ export default function ToDoList() {
           return acc + (current.completed ? 1 : 0);
         }, 0)}
       </h1>
+
       <input
         type="text"
         placeholder="Add a todo"
@@ -55,10 +56,11 @@ export default function ToDoList() {
       >
         Add
       </button>
+
       {
         // to do items
         todos
-          // .filter((todo) => todo.completed === false)
+          .filter((todo) => todo.completed == false)
           .map((todo, index) => (
             <ToDoItem
               task2={todo}
@@ -66,17 +68,12 @@ export default function ToDoList() {
                 const newTodos = todos.slice();
                 newTodos[index] = {
                   ...newTodos[index],
+                  id: newTodos[index].id,
                   completed: !newTodos[index].completed,
                 };
-
-                setTodos(newTodos.filter((todo) => todo.completed === false));
-
-                const newDone = [
-                  ...done,
-                  newTodos.filter((todo) => todo.completed === true)[0],
-                ];
-
-                setDone(newDone);
+                setTodos(newTodos);
+                console.log(newTodos);
+                console.log("todo id", todo.id);
               }}
               key={todo.id}
             />
@@ -84,9 +81,12 @@ export default function ToDoList() {
       }
 
       <h2>Completed Task:</h2>
-      {done.map((completedItem, index) => (
-        <ToDoItem task2={completedItem} key={completedItem.id} />
-      ))}
+
+      {todos
+        .filter((todo) => todo.completed === true)
+        .map((done, index) => (
+          <ToDoItem task2={done} key={done.id} />
+        ))}
     </>
   );
 }
